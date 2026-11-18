@@ -1,0 +1,149 @@
+{
+  "name": "openchamber-tasks-hub",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Unified task board for OpenChamber: GitHub, GitLab, Trello, Linear, Jira and local tasks behind one adapter contract, linked to real OpenCode sessions.",
+  "license": "MIT",
+  "type": "module",
+  "files": [
+    "panel/index.html",
+    "panel/main.js",
+    "panel/page.html",
+    "panel/page.js",
+    "service/main.js",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "openchamber": {
+    "apiVersion": 1,
+    "engines": {
+      "openchamber": ">=2.7.1"
+    },
+    "contributes": {
+      "panel": {
+        "id": "tasks-hub",
+        "name": "Tasks Hub",
+        "icon": "task",
+        "entry": "panel/index.html"
+      },
+      "page": {
+        "entry": "panel/page.html",
+        "title": "Tasks Hub"
+      },
+      "capabilities": [
+        "sessions",
+        "prompt"
+      ],
+      "service": {
+        "entry": "service/main.js",
+        "runtime": "host",
+        "permissions": {
+          "exec": [
+            "git",
+            "gh",
+            "glab"
+          ]
+        }
+      },
+      "integration": {
+        "name": "Tasks Hub",
+        "description": "Tokens for GitHub and GitLab. Optional: Tasks Hub reuses the accounts you connected in OpenChamber, or the gh and glab CLIs. A self-hosted GitLab takes a server URL and a token.",
+        "token": {
+          "apiOrigin": "https://api.github.com",
+          "scheme": "bearer",
+          "account": {
+            "path": "/user",
+            "name": "login"
+          }
+        },
+        "settings": [
+          {
+            "id": "github-token",
+            "label": "GitHub token (repo scope; workflow for status checks)",
+            "secret": true
+          },
+          {
+            "id": "gitlab-token",
+            "label": "GitLab token for gitlab.com (read_api, or api to write)",
+            "secret": true
+          },
+          {
+            "id": "gitlab-server",
+            "label": "GitLab server URL for self-hosted (for example https://gitlab.example.com)"
+          },
+          {
+            "id": "repos",
+            "label": "Extra repositories (github:owner/name, gitlab:host/path, trello:<boardId> — comma separated)"
+          },
+          {
+            "id": "trello-key",
+            "label": "Trello API key (developer.trello.com/power-ups/admin)"
+          },
+          {
+            "id": "trello-token",
+            "label": "Trello token (generated for that API key)",
+            "secret": true
+          },
+          {
+            "id": "linear-token",
+            "label": "Linear API key (Settings → Security & access)",
+            "secret": true
+          },
+          {
+            "id": "jira-host",
+            "label": "Jira site (for example acme.atlassian.net)"
+          },
+          {
+            "id": "jira-email",
+            "label": "Jira account email"
+          },
+          {
+            "id": "jira-token",
+            "label": "Jira API token (id.atlassian.com → Security → API tokens)",
+            "secret": true
+          }
+        ]
+      }
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test --experimental-strip-types test/*.test.ts",
+    "check": "npm run typecheck && npm test && npm run build"
+  },
+  "dependencies": {
+    "@openchamber/sdk": "^2.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  },
+  "author": "NemeZZiZZ",
+  "keywords": [
+    "openchamber",
+    "openchamber-extension",
+    "tasks",
+    "kanban",
+    "issues",
+    "github",
+    "gitlab",
+    "trello",
+    "linear",
+    "jira",
+    "opencode"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NemeZZiZZ/openchamber-tasks-hub.git"
+  },
+  "homepage": "https://github.com/NemeZZiZZ/openchamber-tasks-hub#readme",
+  "bugs": {
+    "url": "https://github.com/NemeZZiZZ/openchamber-tasks-hub/issues"
+  },
+  "engines": {
+    "node": ">=22.6"
+  }
+}

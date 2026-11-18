@@ -1,0 +1,9 @@
+node_modules/
+.mimosa/
+.superpowers/
+.DS_Store
+
+# Internal handoff and planning notes — stay local, never published
+HANDOFF.md
+docs/
+pnpm-lock.yaml
